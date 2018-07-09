@@ -10,14 +10,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+
+import java.util.ArrayList;
 
 import bgmi.app.bgmi_android.adapters.BangumiAdapter;
 import bgmi.app.bgmi_android.models.Bangumi;
 
 
 public class BangumiListFragment extends Fragment {
-    private Bangumi[] bangumi;
+    private ArrayList<Bangumi> bangumi;
 
     public BangumiListFragment() {
     }
@@ -38,9 +41,11 @@ public class BangumiListFragment extends Fragment {
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
+        recyclerView.setItemViewCacheSize(bangumi.size());
 
 
         BangumiAdapter bangumiAdapter = new BangumiAdapter(this.bangumi);
+        bangumiAdapter.setHasStableIds(true);
         recyclerView.setAdapter(bangumiAdapter);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -50,7 +55,7 @@ public class BangumiListFragment extends Fragment {
         return view;
     }
 
-    public void setBangumi(Bangumi[] bangumi) {
+    public void setBangumi(ArrayList<Bangumi> bangumi) {
         this.bangumi = bangumi;
     }
 

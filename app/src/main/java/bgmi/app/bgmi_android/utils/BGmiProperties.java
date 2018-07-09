@@ -12,5 +12,5 @@ public class BGmiProperties {
         return mInstance;
     }
 
-    public String bgmiFrontEndURL;
+    public String bgmiBackendURL;
 }

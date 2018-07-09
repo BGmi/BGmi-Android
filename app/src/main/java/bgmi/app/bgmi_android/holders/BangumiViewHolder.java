@@ -1,6 +1,7 @@
 package bgmi.app.bgmi_android.holders;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,6 +20,8 @@ import bgmi.app.bgmi_android.utils.BGmiProperties;
 import bgmi.app.bgmi_android.utils.ImageWorker;
 
 public class BangumiViewHolder extends RecyclerView.ViewHolder {
+    private static final String TAG = "BangumiViewHolder";
+
     private Handler handler = new Handler();
     private ImageView bangumiImageView;
     private TextView bangumiNameView;
@@ -35,11 +38,12 @@ public class BangumiViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void updateUI(Bangumi bangumi) {
+        Log.i(TAG, "updateUI: " + bangumi.getBangumi_name());
         if (bangumiEpisodeLayout.getChildCount() > 0) {
             return;
         }
 
-        String url = BGmiProperties.getInstance().bgmiFrontEndURL + bangumi.getCover();
+        String url = BGmiProperties.getInstance().bgmiBackendURL + bangumi.getCover();
         ImageWorker.loadImage(bangumiImageView, url, handler);
         bangumiNameView.setText(bangumi.getBangumi_name());
         bangumiLatestView.setText("latest: " + bangumi.getEpisode());
@@ -52,8 +56,7 @@ public class BangumiViewHolder extends RecyclerView.ViewHolder {
         Collections.sort(list, Collections.reverseOrder());
 
         for (Integer key: list) {
-            String path = bangumi.getPlayer().get(key.toString()).get("path");
-            System.out.println(path);
+            // String path = bangumi.getPlayer().get(key.toString()).get("path");
 
             Button episodeButton = new Button(itemView.getContext(), null);
             episodeButton.setText(key.toString());

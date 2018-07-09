@@ -2,6 +2,7 @@ package bgmi.app.bgmi_android.adapters;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +15,10 @@ import bgmi.app.bgmi_android.models.Bangumi;
 
 
 public class BangumiAdapter extends RecyclerView.Adapter<BangumiViewHolder> {
-    private Bangumi[] bangumiList;
+    private static final String TAG = "BangumiAdapter";
+    private ArrayList<Bangumi> bangumiList;
 
-    public BangumiAdapter(Bangumi[] bangumiList) {
+    public BangumiAdapter(ArrayList<Bangumi> bangumiList) {
         this.bangumiList = bangumiList;
     }
 
@@ -29,7 +31,13 @@ public class BangumiAdapter extends RecyclerView.Adapter<BangumiViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull BangumiViewHolder holder, int position) {
-        final Bangumi bangumi = bangumiList[position];
+        if (position == 0) {
+            Log.e(TAG, "position:" + position + " tv:" + holder.itemView.toString());
+        }else {
+            Log.i(TAG, "position:" + position + " tv:" + holder.itemView.toString());
+        }
+
+        final Bangumi bangumi = bangumiList.get(position);
         holder.updateUI(bangumi);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -41,6 +49,11 @@ public class BangumiAdapter extends RecyclerView.Adapter<BangumiViewHolder> {
 
     @Override
     public int getItemCount() {
-        return bangumiList.length;
+        return bangumiList.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 }
