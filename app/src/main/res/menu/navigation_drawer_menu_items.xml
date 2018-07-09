@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="all">
+        <item
+            android:id="@+id/navigation_drawer_bangumi"
+            android:icon="@drawable/baseline_video_library_black_18dp"
+            android:title="Bangumi" />
+
+        <item
+            android:id="@+id/navigation_drawer_old_bangumi"
+            android:icon="@drawable/baseline_photo_library_black_18dp"
+            android:title="Old Bangumi" />
+
+        <item
+            android:id="@+id/navigation_drawer_calendar"
+            android:icon="@drawable/baseline_calendar_today_black_18dp"
+            android:title="Calendar" />
+
+        <item
+            android:id="@+id/navigation_drawer_resource"
+            android:icon="@drawable/baseline_rss_feed_black_18dp"
+            android:title="Resource" />
+
+    </group>
+
+    <group android:checkableBehavior="all">
+        <item
+            android:id="@+id/navigation_drawer_subscribe"
+            android:icon="@drawable/baseline_subscriptions_black_18dp"
+            android:title="Subscribe" />
+
+        <item
+            android:id="@+id/navigation_drawer_about"
+            android:icon="@drawable/baseline_info_black_18dp"
+            android:title="About" />
+    </group>
+</menu>
