@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">BGmi</string>
+    <string name="edit_message">BGmi backend URL</string>
+    <string name="button_send">Go</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_detail">DetailActivity</string>
+    <string name="title_activity_bangumi_list2">BangumiList2Activity</string>
+</resources>
