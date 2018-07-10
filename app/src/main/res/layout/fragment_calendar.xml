@@ -2,15 +2,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".CalendarFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
-    <ListView
-        android:id="@+id/calendar_list"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/calendar_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="8dp"
-        />
+        android:layout_height="wrap_content" />
 </FrameLayout>

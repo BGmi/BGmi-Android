@@ -46,6 +46,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        String url = getSharedPreferences("bgmi_config", 0).getString("bgmi_url", "");
+        if (url.equals("")) {
+            createFragment(new ResetFragment());
+            mDrawerLayout.closeDrawers();
+            return true;
+        }
         switch (item.getItemId()) {
             case R.id.navigation_drawer_bangumi:
                 createFragment(new BangumiListFragment());
