@@ -67,7 +67,25 @@ public class OldBangumiListFragment extends BangumiListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_bangumi_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_bangumi_list, container, false);
+        if (bangumiList != null) {
+            callback(view);
+        }
+        return view;
+    }
+
+    public void callback(View view) {
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setItemViewCacheSize(bangumiList.size());
+
+        BangumiAdapter bangumiAdapter = new BangumiAdapter(this.bangumiList);
+        bangumiAdapter.setHasStableIds(true);
+        recyclerView.setAdapter(bangumiAdapter);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayout.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
     }
 
     public void callback(ArrayList<Bangumi> bangumiArrayList, String errorString) {

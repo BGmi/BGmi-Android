@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 createFragment(new OldBangumiListFragment());
                 break;
             case R.id.navigation_drawer_calendar:
+                createFragment(new CalendarFragment());
                 break;
             case R.id.navigation_drawer_resource:
                 break;

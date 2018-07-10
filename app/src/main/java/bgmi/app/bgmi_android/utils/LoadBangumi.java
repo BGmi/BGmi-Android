@@ -36,8 +36,7 @@ public class LoadBangumi {
     }
 
     public void load(String url, Context context, final CallBack clazz) {
-        String errorString = "";
-        Log.i(TAG, "loadData: " + url);
+        Log.i(TAG, "load: " + url);
         RequestQueue queue = Volley.newRequestQueue(context);
         final JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET, url, null,
@@ -55,6 +54,39 @@ public class LoadBangumi {
 
                             clazz.callback(bangumiList, "");
 
+                        } catch (Exception ex) {
+                            clazz.callback(null, "Error when parsing response data");
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        clazz.callback(null, "Error when performing HTTP request");
+                        Log.e(TAG, error.toString());
+                    }
+                }
+        );
+        queue.add(request);
+    }
+
+    public void calendar(Context context, final CallBack clazz) {
+        String url = BGmiProperties.getInstance().bgmiBackendURL + BGmiProperties.getInstance().pageCalURL;
+        Log.i(TAG, "calendar: " + url);
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+        final JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray jsonArray = response.getJSONArray("data");
+                            for (int i=0; i < jsonArray.length(); i++) {
+                                JSONObject jo = jsonArray.getJSONObject(i);
+                                System.out.println(jo);
+                            }
                         } catch (Exception ex) {
                             clazz.callback(null, "Error when parsing response data");
                         }
