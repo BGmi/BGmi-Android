@@ -28,7 +28,7 @@ import bgmi.app.bgmi_android.utils.CallBack;
 import bgmi.app.bgmi_android.utils.LoadBangumi;
 
 
-public class BangumiListFragment extends Fragment implements CallBack {
+public class BangumiListFragment extends Fragment implements CallBack<ArrayList<Bangumi>> {
     private static final String TAG = "BangumiListFragment";
     private ArrayList<Bangumi> bangumiList;
 

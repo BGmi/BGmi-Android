@@ -1,7 +1,9 @@
 package bgmi.app.bgmi_android.utils;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.util.LruCache;
 import android.widget.ImageView;

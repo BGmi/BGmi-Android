@@ -1,7 +1,10 @@
 package bgmi.app.bgmi_android.utils;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.util.LruCache;
@@ -19,10 +22,24 @@ public class ImageWorker {
     private final static LruCache<String,Bitmap> mLruCache = new LruCache<String, Bitmap>(lruSizeMaxSize);
     private static ExecutorService mExecutorService = null;
     private static final int threadPoolMaxSize = 6;
-    private ImageWorker() {
-    }
     private static ImageWorker mImageWorker = null;
     private static String bitmapPath = "";
+    public static Context context;
+
+    private ImageWorker() {
+        bitmapPath = getDiskCacheDir(ImageWorker.context);
+    }
+
+    public String getDiskCacheDir(Context context) {
+        String cachePath = null;
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
+                || !Environment.isExternalStorageRemovable()) {
+            cachePath = context.getExternalCacheDir().getPath();
+        } else {
+            cachePath = context.getCacheDir().getPath();
+        }
+        return cachePath;
+    }
 
     private static synchronized void getImageWorkerInstance(){
         if(mImageWorker == null){

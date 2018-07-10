@@ -31,12 +31,6 @@ public class BangumiAdapter extends RecyclerView.Adapter<BangumiViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull BangumiViewHolder holder, int position) {
-        if (position == 0) {
-            Log.e(TAG, "position:" + position + " tv:" + holder.itemView.toString());
-        }else {
-            Log.i(TAG, "position:" + position + " tv:" + holder.itemView.toString());
-        }
-
         final Bangumi bangumi = bangumiList.get(position);
         holder.updateUI(bangumi);
 

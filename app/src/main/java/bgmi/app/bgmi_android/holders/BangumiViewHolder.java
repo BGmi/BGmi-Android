@@ -45,6 +45,7 @@ public class BangumiViewHolder extends RecyclerView.ViewHolder {
         }
 
         String url = BGmiProperties.getInstance().bgmiBackendURL + bangumi.getCover();
+        ImageWorker.context = bangumiImageView.getContext();
         ImageWorker.loadImage(bangumiImageView, url, handler);
         bangumiNameView.setText(bangumi.getBangumi_name());
         bangumiLatestView.setText("latest: " + bangumi.getEpisode());

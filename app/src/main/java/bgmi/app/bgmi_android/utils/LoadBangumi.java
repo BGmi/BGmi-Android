@@ -1,9 +1,7 @@
 package bgmi.app.bgmi_android.utils;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -17,8 +15,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-
-import javax.security.auth.callback.Callback;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import bgmi.app.bgmi_android.models.Bangumi;
 
@@ -71,7 +71,7 @@ public class LoadBangumi {
         queue.add(request);
     }
 
-    public void calendar(Context context, final CallBack clazz) {
+    public void calendar(Context context, final CallBack<HashMap<String, ArrayList<String>>> clazz) {
         String url = BGmiProperties.getInstance().bgmiBackendURL + BGmiProperties.getInstance().pageCalURL;
         Log.i(TAG, "calendar: " + url);
 
@@ -82,11 +82,20 @@ public class LoadBangumi {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            JSONArray jsonArray = response.getJSONArray("data");
-                            for (int i=0; i < jsonArray.length(); i++) {
-                                JSONObject jo = jsonArray.getJSONObject(i);
-                                System.out.println(jo);
+                            JSONObject jsonObject = response.getJSONObject("data");
+                            HashMap<String, ArrayList<String>> calendarMap = new HashMap<>();
+                            for (Iterator<String> it = jsonObject.keys(); it.hasNext(); ) {
+                                String key = it.next();
+                                ArrayList<String> nameList = new ArrayList<String>();
+
+                                JSONArray jsonArray = jsonObject.getJSONArray(key);
+                                for (Integer i = 0; i<jsonArray.length(); i++) {
+                                    nameList.add(jsonArray.getJSONObject(i).getString("name"));
+                                }
+                                calendarMap.put(key, nameList);
                             }
+                            clazz.callback(calendarMap, "");
+
                         } catch (Exception ex) {
                             clazz.callback(null, "Error when parsing response data");
                         }
