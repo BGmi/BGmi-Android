@@ -5,7 +5,7 @@
     android:id="@+id/cardview"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".BangumiListActivity">
+    tools:context=".MainActivity">
 
     <android.support.v7.widget.CardView
         android:layout_width="0dp"

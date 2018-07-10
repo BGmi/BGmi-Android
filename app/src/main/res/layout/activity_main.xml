@@ -1,40 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:id="@+id/drawer_layout"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
+
+<android.support.design.widget.CoordinatorLayout
+    android:id="@+id/rootLayout"
     android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+
+</android.support.design.widget.CoordinatorLayout>
+
+<android.support.design.widget.NavigationView
+    android:id="@+id/navigation_drawer"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_gravity="start"
+    app:headerLayout="@layout/nav_header"
+    app:itemIconTint="#484848"
+    app:itemTextColor="#484848"
+    app:menu="@menu/navigation_drawer_menu_items" />
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="224dp"
-        android:layout_height="51dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="168dp"
-        android:ems="10"
-        android:hint="@string/edit_message"
-        android:inputType="textPersonName"
-        android:text="https://bgmi.ricterz.me/"
-        app:layout_constraintEnd_toStartOf="@+id/button"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button"
-        style="@android:style/Widget.Material.Light.Button.Borderless"
-        android:layout_width="92dp"
-        android:layout_height="51dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="168dp"
-        android:onClick="sendMessage"
-        android:text="@string/button_send"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/editText"
-        app:layout_constraintTop_toTopOf="parent" />
-
-</android.support.constraint.ConstraintLayout>
+</android.support.v4.widget.DrawerLayout>

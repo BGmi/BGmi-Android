@@ -25,7 +25,7 @@ public class BangumiAdapter extends RecyclerView.Adapter<BangumiViewHolder> {
     @NonNull
     @Override
     public BangumiViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View ticketCard = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_bangumi, parent, false);
+        View ticketCard = LayoutInflater.from(parent.getContext()).inflate(R.layout.content_bangumi_card, parent, false);
         return new BangumiViewHolder(ticketCard);
     }
 
