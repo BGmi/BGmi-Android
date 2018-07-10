@@ -13,4 +13,6 @@ public class BGmiProperties {
     }
 
     public String bgmiBackendURL;
+    final public String pageIndexURL = "api/index";
+    final public String pageOldURL = "api/old";
 }

@@ -14,8 +14,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import bgmi.app.bgmi_android.utils.BGmiProperties;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
@@ -28,8 +29,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         SharedPreferences sp = getSharedPreferences("bgmi_config", 0);
-        String url = sp.getString("bgmi_url", "https://");
-        if (url.equals("https://")) {
+        String url = sp.getString("bgmi_url", "");
+        BGmiProperties.getInstance().bgmiBackendURL = url;
+
+        if (url.equals("https://") || url.equals("")) {
             createFragment(new ResetFragment());
         } else {
             createFragment(new BangumiListFragment());
@@ -48,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 createFragment(new BangumiListFragment());
                 break;
             case R.id.navigation_drawer_old_bangumi:
+                createFragment(new OldBangumiListFragment());
                 break;
             case R.id.navigation_drawer_calendar:
                 break;

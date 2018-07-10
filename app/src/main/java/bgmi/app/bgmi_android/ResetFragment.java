@@ -53,13 +53,18 @@ public class ResetFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         EditText editText = getView().findViewById(R.id.reset_backend_url);
-        BGmiProperties.getInstance().bgmiBackendURL = editText.getText().toString();
+        String url = editText.getText().toString();
 
+        if (!url.endsWith("/")) {
+            url += "/";
+        }
+
+        BGmiProperties.getInstance().bgmiBackendURL = url;
         SharedPreferences.Editor editor = getActivity().getSharedPreferences("bgmi_config", 0).edit();
-        editor.putString("bgmi_url", BGmiProperties.getInstance().bgmiBackendURL);
+        editor.putString("bgmi_url", url);
         editor.apply();
-        Toast.makeText(getActivity(), "Config saved successfully", Toast.LENGTH_SHORT).show();
 
+        Toast.makeText(getActivity(), "Config saved successfully", Toast.LENGTH_SHORT).show();
         return true;
     }
 
