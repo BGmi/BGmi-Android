@@ -18,6 +18,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".PlayerActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="screenSize|keyboardHidden|orientation" />
     </application>
 
 </manifest>

@@ -3,6 +3,7 @@ package bgmi.app.bgmi_android;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -31,6 +32,7 @@ import bgmi.app.bgmi_android.utils.LoadBangumi;
 public class OldBangumiListFragment extends BangumiListFragment {
     private static final String TAG = "OldBangumiListFragment";
     private ArrayList<Bangumi> bangumiList;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public void loadData() {
         String url = getActivity().getSharedPreferences("bgmi_config", 0).getString("bgmi_url", "");
@@ -78,6 +80,17 @@ public class OldBangumiListFragment extends BangumiListFragment {
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemViewCacheSize(bangumiList.size());
+
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadData();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
 
         BangumiAdapter bangumiAdapter = new BangumiAdapter(this.bangumiList);
         bangumiAdapter.setHasStableIds(true);

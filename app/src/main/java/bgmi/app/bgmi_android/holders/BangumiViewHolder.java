@@ -1,6 +1,7 @@
 package bgmi.app.bgmi_android.holders;
 
-import android.content.SharedPreferences;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -9,12 +10,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.os.Handler;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import bgmi.app.bgmi_android.PlayerActivity;
 import bgmi.app.bgmi_android.R;
 import bgmi.app.bgmi_android.models.Bangumi;
 import bgmi.app.bgmi_android.utils.BGmiProperties;
@@ -58,13 +61,36 @@ public class BangumiViewHolder extends RecyclerView.ViewHolder {
         Collections.sort(list, Collections.reverseOrder());
 
         for (Integer key: list) {
-            // String path = bangumi.getPlayer().get(key.toString()).get("path");
-
+            String path = bangumi.getPlayer().get(key.toString()).get("path");
             Button episodeButton = new Button(itemView.getContext(), null);
             episodeButton.setText(key.toString());
+            episodeButton.setOnClickListener(new BangumiPlayClickListener(path));
 
             bangumiEpisodeLayout.addView(episodeButton);
         }
     }
 
+}
+
+
+class BangumiPlayClickListener implements View.OnClickListener {
+    private String path;
+
+    BangumiPlayClickListener(String path) {
+        this.path = path;
+    }
+
+    @Override
+    public void onClick(View v) {
+        String url = v.getContext().getSharedPreferences("bgmi_config", 0).getString("bgmi_url", "");
+        if (url.equals("")) {
+            Toast.makeText(v.getContext(), "No BGmi backend configured", Toast.LENGTH_LONG).show();
+            return;
+        }
+        Uri uri = Uri.parse(url + "bangumi" + path);
+        Intent intent = new Intent(v.getContext(), PlayerActivity.class);
+        intent.setData(uri);
+
+        v.getContext().startActivity(intent);
+    }
 }
