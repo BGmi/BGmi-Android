@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         BGmiProperties.getInstance().bgmiBackendURL = url;
 
         if (url.equals("https://") || url.equals("")) {
-            createFragment(new ResetFragment());
+            createFragment(new SettingsFragment());
         } else {
             createFragment(new BangumiListFragment());
         }
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         String url = getSharedPreferences("bgmi_config", 0).getString("bgmi_url", "");
         if (url.equals("")) {
-            createFragment(new ResetFragment());
+            createFragment(new SettingsFragment());
             mDrawerLayout.closeDrawers();
             return true;
         }
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.navigation_drawer_subscribe:
                 break;
             case R.id.navigation_drawer_settings:
-                createFragment(new ResetFragment());
+                createFragment(new SettingsFragment());
                 break;
             case R.id.navigation_drawer_about:
                 createFragment(new AboutFragment());

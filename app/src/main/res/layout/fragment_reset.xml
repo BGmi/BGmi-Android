@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ResetFragment">
+    tools:context=".SettingsFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -13,21 +13,32 @@
         android:layout_margin="8dp"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Set your BGmi backend URL and BGmi ADMIN_TOKEN (not necessary)." />
+
         <EditText
             android:id="@+id/reset_backend_url"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:hint="BGmi backend URL"
             android:inputType="textPersonName"
             android:text="https://" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/admin_token"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Set your BGmi backend URL there." />
+            android:ems="10"
+            android:hint="ADMIN_TOKEN"
+            android:inputType="textPersonName" />
 
     </LinearLayout>
+
 </FrameLayout>

@@ -9,20 +9,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import bgmi.app.bgmi_android.utils.BGmiProperties;
 
 
-public class ResetFragment extends Fragment {
-    public ResetFragment() {
+public class SettingsFragment extends Fragment {
+    public SettingsFragment() {
         // Required empty public constructor
     }
 
-    public static ResetFragment newInstance() {
-        return new ResetFragment();
+    public static SettingsFragment newInstance() {
+        return new SettingsFragment();
     }
 
     @Override
