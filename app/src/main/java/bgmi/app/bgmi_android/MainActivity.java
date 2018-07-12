@@ -75,10 +75,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.navigation_drawer_calendar:
                 createFragment(new CalendarFragment());
                 break;
-            case R.id.navigation_drawer_resource:
-                break;
-            case R.id.navigation_drawer_subscribe:
-                break;
             case R.id.navigation_drawer_settings:
                 createFragment(new SettingsFragment());
                 break;
