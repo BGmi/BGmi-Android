@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 import bgmi.app.bgmi_android.models.Bangumi;
 import bgmi.app.bgmi_android.utils.BGmiProperties;
@@ -29,6 +31,7 @@ import bgmi.app.bgmi_android.utils.BGmiProperties;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener  {
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private DrawerLayout mDrawerLayout;
+    private Boolean drawerLayoutStatus = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +140,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void setTitle(CharSequence title) {
+    }
+
+    @Override
+    public void onBackPressed(){
+        if (drawerLayoutStatus) {
+            drawerLayoutStatus = false;
+            mDrawerLayout.closeDrawers();
+            createFragment(new BangumiListFragment());
+            return;
+        }
+
+        if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
+            mDrawerLayout.closeDrawers();
+        } else {
+            if (getVisibleFragment() instanceof BangumiListFragment) {
+                finish();
+            } else {
+                drawerLayoutStatus = true;
+                mDrawerLayout.openDrawer(Gravity.LEFT);
+            }
+        }
+    }
+
+    public Fragment getVisibleFragment(){
+        FragmentManager fragmentManager = MainActivity.this.getSupportFragmentManager();
+        List<Fragment> fragments = fragmentManager.getFragments();
+        if(fragments != null){
+            for(Fragment fragment : fragments){
+                if(fragment != null && fragment.isVisible())
+                    return fragment;
+            }
+        }
+        return null;
     }
 }
 

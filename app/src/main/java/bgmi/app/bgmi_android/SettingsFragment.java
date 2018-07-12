@@ -1,6 +1,9 @@
 package bgmi.app.bgmi_android;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.inputmethodservice.Keyboard;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,6 +12,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -54,6 +59,9 @@ public class SettingsFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+
         EditText urlText = getView().findViewById(R.id.reset_backend_url);
         String url = urlText.getText().toString();
 
