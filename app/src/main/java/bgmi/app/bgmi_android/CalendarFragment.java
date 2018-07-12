@@ -2,6 +2,7 @@ package bgmi.app.bgmi_android;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,9 +21,15 @@ import bgmi.app.bgmi_android.utils.CallBack;
 
 public class CalendarFragment extends Fragment implements CallBack<HashMap<String, ArrayList<String>>> {
     ArrayList<String> listItem = new ArrayList<>();
+    private SwipeRefreshLayout swipeRefreshLayout;
+
     private String[] weekDays = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
 
     public CalendarFragment() {
+    }
+
+    public void loadData() {
+        BGmiManager.getInstance().calendar(getContext(), this);
     }
 
     public static CalendarFragment newInstance() {
@@ -32,13 +39,26 @@ public class CalendarFragment extends Fragment implements CallBack<HashMap<Strin
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        BGmiManager.getInstance().calendar(getContext(), this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_calendar, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_calendar, container, false);
+
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadData();
+            }
+        });
+        swipeRefreshLayout.setRefreshing(true);
+
+        loadData();
+        return view;
     }
 
     @Override
@@ -66,6 +86,8 @@ public class CalendarFragment extends Fragment implements CallBack<HashMap<Strin
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayout.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
+
+        swipeRefreshLayout.setRefreshing(false);
     }
 }
 

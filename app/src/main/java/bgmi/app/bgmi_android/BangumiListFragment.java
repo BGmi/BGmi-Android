@@ -82,7 +82,6 @@ public class BangumiListFragment extends Fragment implements CallBack<ArrayList<
             @Override
             public void onRefresh() {
                 loadData();
-                swipeRefreshLayout.setRefreshing(false);
             }
         });
 
@@ -118,7 +117,6 @@ public class BangumiListFragment extends Fragment implements CallBack<ArrayList<
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemViewCacheSize(bangumiList.size());
 
-
         BangumiAdapter bangumiAdapter = new BangumiAdapter(bangumiList);
         bangumiAdapter.setHasStableIds(true);
         recyclerView.setAdapter(bangumiAdapter);
@@ -126,6 +124,7 @@ public class BangumiListFragment extends Fragment implements CallBack<ArrayList<
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayout.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
+        swipeRefreshLayout.setRefreshing(false);
     }
 
 }
