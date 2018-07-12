@@ -16,6 +16,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+
+import bgmi.app.bgmi_android.models.Bangumi;
 import bgmi.app.bgmi_android.utils.BGmiProperties;
 
 
@@ -28,9 +35,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Gson gson = new Gson();
+        Type type = new TypeToken<ArrayList<Bangumi>>() {}.getType();
+
         SharedPreferences sp = getSharedPreferences("bgmi_config", 0);
         String url = sp.getString("bgmi_url", "");
+
         BGmiProperties.getInstance().bgmiBackendURL = url;
+        BGmiProperties.getInstance().adminToken = sp.getString("bgmi_token", "");
+        BGmiProperties.getInstance().followedBangumi = gson.fromJson(sp.getString("bgmi_data", ""), type);
 
         if (url.equals("https://") || url.equals("")) {
             createFragment(new SettingsFragment());

@@ -51,16 +51,22 @@ public class SettingsFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        EditText editText = getView().findViewById(R.id.reset_backend_url);
-        String url = editText.getText().toString();
+        EditText urlText = getView().findViewById(R.id.reset_backend_url);
+        String url = urlText.getText().toString();
+
+        EditText tokenText = getView().findViewById(R.id.admin_token);
+        String token = tokenText.getText().toString();
 
         if (!url.endsWith("/")) {
             url += "/";
         }
 
         BGmiProperties.getInstance().bgmiBackendURL = url;
+        BGmiProperties.getInstance().adminToken = token;
+
         SharedPreferences.Editor editor = getActivity().getSharedPreferences("bgmi_config", 0).edit();
         editor.putString("bgmi_url", url);
+        editor.putString("bgmi_admin_token", token);
         editor.apply();
 
         Toast.makeText(getActivity(), "Config saved successfully", Toast.LENGTH_SHORT).show();

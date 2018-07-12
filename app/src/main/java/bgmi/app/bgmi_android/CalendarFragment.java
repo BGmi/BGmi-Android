@@ -8,18 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 
-import bgmi.app.bgmi_android.adapters.BangumiAdapter;
 import bgmi.app.bgmi_android.adapters.CalendarAdapter;
+import bgmi.app.bgmi_android.utils.BGmiManager;
 import bgmi.app.bgmi_android.utils.CallBack;
-import bgmi.app.bgmi_android.utils.LoadBangumi;
 
 
 public class CalendarFragment extends Fragment implements CallBack<HashMap<String, ArrayList<String>>> {
@@ -36,7 +32,7 @@ public class CalendarFragment extends Fragment implements CallBack<HashMap<Strin
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LoadBangumi.getInstance().calendar(getContext(), this);
+        BGmiManager.getInstance().calendar(getContext(), this);
     }
 
     @Override

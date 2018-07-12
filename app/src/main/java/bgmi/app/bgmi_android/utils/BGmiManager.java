@@ -17,25 +17,30 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+
+import javax.security.auth.callback.Callback;
 
 import bgmi.app.bgmi_android.models.Bangumi;
 
-public class LoadBangumi {
-    private static final String TAG = "LoadBangumi";
-    private static LoadBangumi mInstance = null;
+public class BGmiManager {
+    private static final String TAG = "BGmiManager";
+    private static BGmiManager mInstance = null;
 
-    private LoadBangumi(){}
+    private BGmiManager(){}
 
-    public static synchronized LoadBangumi getInstance() {
+    public String getUrl() {
+        return BGmiProperties.getInstance().bgmiBackendURL;
+    }
+
+    public static synchronized BGmiManager getInstance() {
         if(null == mInstance){
-            mInstance = new LoadBangumi();
+            mInstance = new BGmiManager();
         }
         return mInstance;
     }
 
-    public void load(String url, Context context, final CallBack clazz) {
+    public void load(Context context, final CallBack clazz, String path) {
+        String url = getUrl() + path;
         Log.i(TAG, "load: " + url);
         RequestQueue queue = Volley.newRequestQueue(context);
         final JsonObjectRequest request = new JsonObjectRequest(
@@ -72,7 +77,7 @@ public class LoadBangumi {
     }
 
     public void calendar(Context context, final CallBack<HashMap<String, ArrayList<String>>> clazz) {
-        String url = BGmiProperties.getInstance().bgmiBackendURL + BGmiProperties.getInstance().pageCalURL;
+        String url = getUrl() + BGmiProperties.getInstance().pageCalURL;
         Log.i(TAG, "calendar: " + url);
 
         RequestQueue queue = Volley.newRequestQueue(context);
@@ -111,5 +116,9 @@ public class LoadBangumi {
                 }
         );
         queue.add(request);
+    }
+
+    public void subscribe(Context context) {
+
     }
 }

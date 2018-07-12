@@ -2,15 +2,11 @@ package bgmi.app.bgmi_android;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -25,8 +21,7 @@ import java.util.ArrayList;
 import bgmi.app.bgmi_android.adapters.BangumiAdapter;
 import bgmi.app.bgmi_android.models.Bangumi;
 import bgmi.app.bgmi_android.utils.BGmiProperties;
-import bgmi.app.bgmi_android.utils.CallBack;
-import bgmi.app.bgmi_android.utils.LoadBangumi;
+import bgmi.app.bgmi_android.utils.BGmiManager;
 
 
 public class OldBangumiListFragment extends BangumiListFragment {
@@ -35,12 +30,9 @@ public class OldBangumiListFragment extends BangumiListFragment {
     private SwipeRefreshLayout swipeRefreshLayout;
 
     public void loadData() {
-        String url = getActivity().getSharedPreferences("bgmi_config", 0).getString("bgmi_url", "");
-        url += BGmiProperties.getInstance().pageOldURL;
-        Log.i(TAG, "loadData: " + url);
-
-        LoadBangumi.getInstance().load(url, getContext(), this);
+        BGmiManager.getInstance().load(getContext(), this, BGmiProperties.getInstance().pageOldURL);
     }
+
     public OldBangumiListFragment() {
     }
 
