@@ -20,13 +20,9 @@ import bgmi.app.bgmi_android.utils.CallBack;
 
 
 public class CalendarFragment extends Fragment implements CallBack<HashMap<String, ArrayList<String>>> {
-    ArrayList<String> listItem = new ArrayList<>();
     private SwipeRefreshLayout swipeRefreshLayout;
 
-    private String[] weekDays = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
-
-    public CalendarFragment() {
-    }
+    public CalendarFragment() { }
 
     public void loadData() {
         BGmiManager.getInstance().calendar(getContext(), this);
@@ -47,7 +43,7 @@ public class CalendarFragment extends Fragment implements CallBack<HashMap<Strin
 
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
 
-        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout = view.findViewById(R.id.refresh_cal);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -56,7 +52,6 @@ public class CalendarFragment extends Fragment implements CallBack<HashMap<Strin
             }
         });
         swipeRefreshLayout.setRefreshing(true);
-
         loadData();
         return view;
     }
@@ -79,7 +74,7 @@ public class CalendarFragment extends Fragment implements CallBack<HashMap<Strin
         recyclerView.setItemViewCacheSize(callbackData.keySet().size());
 
 
-        CalendarAdapter calendarAdapter = new CalendarAdapter(callbackData);
+        CalendarAdapter calendarAdapter = new CalendarAdapter(this, callbackData);
         calendarAdapter.setHasStableIds(true);
         recyclerView.setAdapter(calendarAdapter);
 
@@ -88,6 +83,10 @@ public class CalendarFragment extends Fragment implements CallBack<HashMap<Strin
         recyclerView.setLayoutManager(layoutManager);
 
         swipeRefreshLayout.setRefreshing(false);
+    }
+
+    public SwipeRefreshLayout getSwipeRefreshLayout() {
+        return swipeRefreshLayout;
     }
 }
 

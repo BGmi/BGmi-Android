@@ -43,6 +43,7 @@ public class BGmiManager {
 
     public void load(Context context, final CallBack clazz, String path) {
         String url = getUrl() + path;
+        Log.i(TAG, "load: " + url);
         RequestQueue queue = Volley.newRequestQueue(context);
         final JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET, url, null,
@@ -61,6 +62,7 @@ public class BGmiManager {
                             clazz.callback(bangumiList, "");
 
                         } catch (Exception ex) {
+                            ex.printStackTrace();
                             clazz.callback(null, "Error when parsing response data");
                         }
 
@@ -79,6 +81,7 @@ public class BGmiManager {
 
     public void calendar(Context context, final CallBack<HashMap<String, ArrayList<String>>> clazz) {
         String url = getUrl() + BGmiProperties.getInstance().pageCalURL;
+        Log.i(TAG, "calendar: " + url);
         RequestQueue queue = Volley.newRequestQueue(context);
         final JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET, url, null,
@@ -119,8 +122,9 @@ public class BGmiManager {
 
     public void subscribe(Context context, final CallBack<String> clazz, String name, String path) {
         String url = getUrl() + path;
+        Log.i(TAG, "subscribe: " + url);
         RequestQueue queue = Volley.newRequestQueue(context);
-        HashMap params = new HashMap();
+        HashMap<String, String> params = new HashMap<>();
         params.put("name", name);
         JSONObject parameters = new JSONObject(params);
 
@@ -135,8 +139,8 @@ public class BGmiManager {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        clazz.callback(null, "Error when performing HTTP request, maybe ADMIN_TOKEN not correct");
                         Log.e(TAG, error.toString());
+                        clazz.callback(null, "Error when performing HTTP request, maybe ADMIN_TOKEN not correct");
                     }
                 }
         ) {

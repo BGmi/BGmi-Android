@@ -1,5 +1,6 @@
 package bgmi.app.bgmi_android.adapters;
 
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -17,9 +18,12 @@ import bgmi.app.bgmi_android.holders.CalendarViewHolder;
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
     private HashMap<String, ArrayList<String>> calData;
     private ArrayList<String> weekOrder;
+    private Fragment fragment;
 
-    public CalendarAdapter(HashMap<String, ArrayList<String>> calData) {
+    public CalendarAdapter(Fragment fragment, HashMap<String, ArrayList<String>> calData) {
+        this.fragment = fragment;
         this.calData = calData;
+
         Integer i;
         Integer day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1;
         weekOrder = new ArrayList<>();
@@ -38,7 +42,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
     @Override
     public CalendarViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View calCard = LayoutInflater.from(parent.getContext()).inflate(R.layout.content_calendar, parent, false);
-        return new CalendarViewHolder(calCard);
+        return new CalendarViewHolder(fragment, calCard);
     }
 
     @Override

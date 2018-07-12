@@ -68,13 +68,6 @@ public class BangumiListFragment extends Fragment implements CallBack<ArrayList<
         if (bangumiList != null) {
             callback(view);
         }
-        return view;
-    }
-
-    public void callback(View view) {
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setItemViewCacheSize(bangumiList.size());
 
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
@@ -84,7 +77,13 @@ public class BangumiListFragment extends Fragment implements CallBack<ArrayList<
                 loadData();
             }
         });
+        return view;
+    }
 
+    public void callback(View view) {
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setItemViewCacheSize(bangumiList.size());
 
         BangumiAdapter bangumiAdapter = new BangumiAdapter(this.bangumiList);
         bangumiAdapter.setHasStableIds(true);
@@ -124,7 +123,9 @@ public class BangumiListFragment extends Fragment implements CallBack<ArrayList<
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayout.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        swipeRefreshLayout.setRefreshing(false);
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
     }
 
 }
