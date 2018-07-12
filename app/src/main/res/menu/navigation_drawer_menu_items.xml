@@ -16,16 +16,6 @@
             android:icon="@drawable/baseline_calendar_today_black_18dp"
             android:title="Calendar" />
 
-        <item
-            android:id="@+id/navigation_drawer_resource"
-            android:icon="@drawable/baseline_rss_feed_black_18dp"
-            android:title="Resource" />
-
-        <item
-            android:id="@+id/navigation_drawer_subscribe"
-            android:icon="@drawable/baseline_subscriptions_black_18dp"
-            android:title="Subscribe" />
-
     <item
         android:id="@+id/navigation_drawer_settings"
         android:icon="@drawable/baseline_settings_black_18dp"

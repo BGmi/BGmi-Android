@@ -15,7 +15,9 @@ import java.util.ArrayList;
 
 import bgmi.app.bgmi_android.R;
 import bgmi.app.bgmi_android.models.Bangumi;
+import bgmi.app.bgmi_android.utils.BGmiManager;
 import bgmi.app.bgmi_android.utils.BGmiProperties;
+import bgmi.app.bgmi_android.utils.CallBack;
 
 public class CalendarItemViewHolder extends RecyclerView.ViewHolder {
     private static final String TAG = "CalendarItemViewHolder";
@@ -43,8 +45,9 @@ public class CalendarItemViewHolder extends RecyclerView.ViewHolder {
 }
 
 
-class SubscribeOnCheckedChangeListener implements CompoundButton.OnCheckedChangeListener {
+class SubscribeOnCheckedChangeListener implements CompoundButton.OnCheckedChangeListener, CallBack<String> {
     private String bangumiName;
+    private CompoundButton button;
 
     SubscribeOnCheckedChangeListener(String name) {
         this.bangumiName = name;
@@ -52,19 +55,32 @@ class SubscribeOnCheckedChangeListener implements CompoundButton.OnCheckedChange
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        button = buttonView;
+
         if (!buttonView.isPressed()) {
             return;
         }
 
         if (BGmiProperties.getInstance().adminToken == null || BGmiProperties.getInstance().adminToken.equals("")) {
-            Toast.makeText(buttonView.getContext(),"No ADMIN_TOKEN set", Toast.LENGTH_LONG).show();
+            Toast.makeText(button.getContext(),"No ADMIN_TOKEN set", Toast.LENGTH_LONG).show();
             return;
         }
 
         if (isChecked) {
-            Toast.makeText(buttonView.getContext(),"Bangumi " + bangumiName + " has been unsubscribed", Toast.LENGTH_LONG).show();
+            BGmiManager.getInstance().subscribe(button.getContext(), this, bangumiName, BGmiProperties.getInstance().pageAddURL);
         } else {
-            Toast.makeText(buttonView.getContext(),"Bangumi " + bangumiName + " has been subscribed", Toast.LENGTH_LONG).show();
+            BGmiManager.getInstance().subscribe(button.getContext(), this, bangumiName, BGmiProperties.getInstance().pageDeleteURL);
         }
+    }
+
+    @Override
+    public void callback(String callbackData, String errorString) {
+        if (!errorString.equals("")) {
+            Toast.makeText(button.getContext(), errorString, Toast.LENGTH_LONG).show();
+            button.setChecked(!button.isChecked());
+            return;
+        }
+        BGmiProperties.getInstance().refresh = true;
+        Toast.makeText(button.getContext(),"Bangumi " + bangumiName + " has been (un)subscribed", Toast.LENGTH_LONG).show();
     }
 }

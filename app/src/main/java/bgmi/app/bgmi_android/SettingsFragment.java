@@ -37,8 +37,11 @@ public class SettingsFragment extends Fragment {
 
         SharedPreferences sp = getActivity().getSharedPreferences("bgmi_config", 0);
         String url = sp.getString("bgmi_url", "");
-        EditText editText = view.findViewById(R.id.reset_backend_url);
-        editText.setText(url);
+        EditText urlText = view.findViewById(R.id.reset_backend_url);
+        urlText.setText(url);
+
+        EditText tokenText = view.findViewById(R.id.admin_token);
+        tokenText.setText(sp.getString("bgmi_token", ""));
 
         return view;
     }
@@ -66,7 +69,7 @@ public class SettingsFragment extends Fragment {
 
         SharedPreferences.Editor editor = getActivity().getSharedPreferences("bgmi_config", 0).edit();
         editor.putString("bgmi_url", url);
-        editor.putString("bgmi_admin_token", token);
+        editor.putString("bgmi_token", token);
         editor.apply();
 
         Toast.makeText(getActivity(), "Config saved successfully", Toast.LENGTH_SHORT).show();

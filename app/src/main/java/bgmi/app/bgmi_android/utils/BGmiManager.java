@@ -3,6 +3,7 @@ package bgmi.app.bgmi_android.utils;
 import android.content.Context;
 import android.util.Log;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -17,6 +18,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import javax.security.auth.callback.Callback;
 
@@ -41,7 +43,6 @@ public class BGmiManager {
 
     public void load(Context context, final CallBack clazz, String path) {
         String url = getUrl() + path;
-        Log.i(TAG, "load: " + url);
         RequestQueue queue = Volley.newRequestQueue(context);
         final JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET, url, null,
@@ -78,8 +79,6 @@ public class BGmiManager {
 
     public void calendar(Context context, final CallBack<HashMap<String, ArrayList<String>>> clazz) {
         String url = getUrl() + BGmiProperties.getInstance().pageCalURL;
-        Log.i(TAG, "calendar: " + url);
-
         RequestQueue queue = Volley.newRequestQueue(context);
         final JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET, url, null,
@@ -118,7 +117,36 @@ public class BGmiManager {
         queue.add(request);
     }
 
-    public void subscribe(Context context) {
+    public void subscribe(Context context, final CallBack<String> clazz, String name, String path) {
+        String url = getUrl() + path;
+        RequestQueue queue = Volley.newRequestQueue(context);
+        HashMap params = new HashMap();
+        params.put("name", name);
+        JSONObject parameters = new JSONObject(params);
 
+        final JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST, url, parameters,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        clazz.callback("subscribed", "");
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        clazz.callback(null, "Error when performing HTTP request, maybe ADMIN_TOKEN not correct");
+                        Log.e(TAG, error.toString());
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> header = new HashMap<>();
+                header.put("bgmi-token", BGmiProperties.getInstance().adminToken);
+                return header;
+            }
+        };
+        queue.add(request);
     }
 }

@@ -49,8 +49,9 @@ public class BangumiListFragment extends Fragment implements CallBack<ArrayList<
         SharedPreferences sp = getActivity().getSharedPreferences("bgmi_config", 0);
         String bgmi_data = sp.getString("bgmi_data", "");
 
-        if (bgmi_data.equals("")) {
+        if (bgmi_data.equals("") || BGmiProperties.getInstance().refresh) {
             loadData();
+            BGmiProperties.getInstance().refresh = false;
         } else {
             Gson gson = new Gson();
             Type type = new TypeToken<ArrayList<Bangumi>>() {}.getType();
@@ -104,6 +105,7 @@ public class BangumiListFragment extends Fragment implements CallBack<ArrayList<
         }
 
         bangumiList = bangumiArrayList;
+        BGmiProperties.getInstance().followedBangumi = bangumiArrayList;
 
         Gson gson = new Gson();
         SharedPreferences.Editor editor = getActivity().getSharedPreferences("bgmi_config", 0).edit();

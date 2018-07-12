@@ -23,4 +23,8 @@ public class BGmiProperties {
     final public String pageIndexURL = "api/index";
     final public String pageOldURL = "api/old";
     final public String pageCalURL = "api/cal";
+    final public String pageAddURL = "api/add";
+    final public String pageDeleteURL = "api/delete";
+
+    public Boolean refresh = false;
 }
