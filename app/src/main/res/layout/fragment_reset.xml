@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Set your BGmi backend URL and BGmi ADMIN_TOKEN (not necessary)." />
+            android:text="Set your BGmi backend URL and BGmi ADMIN_TOKEN (optional)." />
 
         <EditText
             android:id="@+id/reset_backend_url"
