@@ -88,9 +88,7 @@ class BangumiPlayClickListener implements View.OnClickListener {
             return;
         }
         Uri uri = Uri.parse(url + "bangumi" + path);
-        Intent intent = new Intent(v.getContext(), PlayerActivity.class);
-        intent.setData(uri);
-
-        v.getContext().startActivity(intent);
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, uri);
+        v.getContext().startActivity(browserIntent);
     }
 }
