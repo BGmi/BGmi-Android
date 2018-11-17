@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import bgmi.app.bgmi_android.PlayerActivity;
 import bgmi.app.bgmi_android.R;
 import bgmi.app.bgmi_android.models.Bangumi;
 import bgmi.app.bgmi_android.utils.BGmiProperties;
